@@ -1,0 +1,87 @@
+/* Head and Footer Styles */
+.blue-bar {
+  background-color: #001f3f; /* Dark Blue */
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+}
+
+/* Style the header */
+header {
+  background-color: #001f3f;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Container for flexboxes */
+section {
+  display: flex;
+  flex: 1;
+}
+
+/* Style the navigation menu */
+nav {
+  flex: 1;
+  background: #b4bad1;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style the content */
+article {
+  flex: 3;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Style the footer */
+footer {
+  background-color: #001f3f;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    flex-direction: column;
+  }
+}
+/* CSS code for a table with blue background */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color, you can adjust as needed */
+}
+
+th, td {
+  border: 1px solid #fff; /* White border */
+  padding: 10px; /* Adjust padding as needed */
+}
+
+th {
+  background-color: #2980b9; /* Darker blue for header background */
+}
+
+/* Optional: Add hover effect for better user experience */
+tr:hover {
+  background-color: #21618c; /* Darker blue on hover */
+}
