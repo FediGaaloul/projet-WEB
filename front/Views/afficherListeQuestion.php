@@ -68,6 +68,7 @@ $listequestion = $q->afficherQuestions();
                     <td><?php echo $question['id_quest']; ?></td>
                     <td><?php echo $question['question']; ?></td>
                     <td>
+
                         <form method="POST" action="modifierquestion.php">
                             <input type="submit" name="Modifier" value="Modifier">
                             <input type="hidden" value=<?PHP echo $question['id_quest']; ?> name="id_quest">
