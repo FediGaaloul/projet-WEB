@@ -3,17 +3,36 @@ include_once '../config.php';
 include_once '../Model/cours.php';
 class coursC
 {
-	function affichercours()
-	{
-		$sql = "SELECT * FROM cours";
-		$db = config::getConnexion();
-		try {
-			$liste = $db->query($sql);
-			return $liste;
-		} catch (Exception $e) {
-			die('Erreur:' . $e->getMessage());
-		}
-	}
+	public function affichercours()
+{
+    $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
+    $sql = "SELECT * FROM cours";
+    $db = config::getConnexion();
+
+    try {
+        $liste = $db->query($sql);
+        $listecours = $liste->fetchAll(PDO::FETCH_ASSOC);
+
+        switch ($sort) {
+            case 'id_cours_asc':
+                usort($listecours, function ($a, $b) {
+                    return $a['ID_Cours'] - $b['ID_Cours'];
+                });
+                break;
+            case 'id_cours_desc':
+                usort($listecours, function ($a, $b) {
+                    return $b['ID_Cours'] - $a['ID_Cours'];
+                });
+                break;
+            default:
+                break;
+        }
+
+        return $listecours;
+    } catch (Exception $e) {
+        die('Erreur:' . $e->getMessage());
+    }
+}
 	function supprimercours($ID_Cours)
 	{
 		$sql = "DELETE FROM cours WHERE ID_Cours=:ID_Cours";

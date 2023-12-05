@@ -1,6 +1,7 @@
 <?php
 include_once '../Controller/coursC.php';
 $q = new coursC();
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
 $listecours = $q->affichercours();
 ?>
 
@@ -34,6 +35,10 @@ $listecours = $q->affichercours();
                 });
                 !result ? document.getElementsByClassName("recherche")[i].style.display = "none" : document.getElementsByClassName("recherche")[i].style.display = "";
             }
+        }
+        function sortTable(sortType) {
+            console.log('Sort type:', sortType);
+            window.location.href = '?sort=' + sortType;
         }
     </script>
 </head>
@@ -85,6 +90,11 @@ $listecours = $q->affichercours();
         <!-- Page content-->
         <section class="py-5">
             <button><a href="ajoutercours.php">Ajouter un cours</a></button>
+            <button><a href="ajouteravis.php">Ajouter un avis</a></button>
+            <a href="javascript:void(0);" onclick="sortTable('id_cours_asc')">Trier par ID croissant</a>
+            <a href="javascript:void(0);" onclick="sortTable('id_cours_desc')">Trier par ID décroissant</a>
+
+
             <center>
                 <h1>Liste des courss</h1>
             </center>
@@ -132,7 +142,7 @@ $listecours = $q->affichercours();
                         <td>
                             <form method="POST" action="modifiercours.php">
                                 <input type="submit" name="Modifier" value="Modifier">
-                                <input type="hidden" value=<?PHP echo $cours['ID_Cours']; ?> name="ID_Cours">
+                                <input type="hidden" name="ID_Cours" value=<?PHP echo $cours['ID_Cours']; ?>>
                             </form>
                         </td>
                         <td>
