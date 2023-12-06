@@ -1,5 +1,5 @@
 <?php
-require_once 'C:\xampp\htdocs\projet0\con_dbb.php';
+include_once 'C:\xampp\htdocs\projet0\con_dbb.php';
 session_start();
 ?>
 <!DOCTYPE html>

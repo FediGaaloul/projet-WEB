@@ -8,14 +8,14 @@ class Payment
     private $cryptogramme=null;
     private $id_user=null;
 
-    public function __construct($nom_carte, $n_carte, $d_expiration, $cryptogramme)
+    public function __construct($id, $nom_carte, $n_carte, $d_expiration, $cryptogramme,$id_user)
     {
-       // $this->id = $id;
+        $this->id = $id;
         $this->nom_carte = $nom_carte;
         $this->n_carte = $n_carte;
         $this->d_expiration = $d_expiration;
         $this->cryptogramme = $cryptogramme;
-       // $this->id_user = $id_user;
+        $this->id_user = $id_user;
     }
 
      public function getId()

@@ -1,6 +1,6 @@
 <?php
-require_once '..\config.php';
-require_once '..\controllor\payementc.php';
+include_once '../config.php';
+include_once '../controllor/payementc.php';
 $p = new payementC();
 $listePayments = $p->afficherpayements();
 ?>
@@ -87,7 +87,7 @@ $listePayments = $p->afficherpayements();
                         <td>
                             <form method="POST" action="modifierPayment.php">
                                 <input type="submit" name="Modifier" value="Modifier">
-                                <input type="hidden" value=<?PHP echo $payment['id']; ?> name="id_payment">
+                                <input type="hidden" value=<?PHP echo $payment['id']; ?> name="id">
                             </form>
                         </td>
                         <td>

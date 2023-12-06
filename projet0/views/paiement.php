@@ -1,41 +1,37 @@
 <?php
-require_once '..\config.php';
-require_once '..\controllor\payementc.php';
-require_once '..\model\payement.php';
-require_once '..\controllor\Utilisateurc.php';
-
-
-$ut=new UtilisateurC();
-$qqq=$ut->afficherUtilisateurs();
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-  $error = ""; 
-  $qq=new payementC();
-
-if (
-    isset($_POST["id"]) &&
-    isset($_POST["nom_carte"]) &&
-    isset($_POST["n_carte"]) &&
-    isset($_POST["d_expiration"]) &&
-    isset($_POST["cryptogramme"]) &&
-    isset($_POST["id_user"])
-    ) 
-   { 
-        
-        $payment = new Payment(
-            $_POST['id'],
-            $_POST['nom_carte'],
-            $_POST['n_carte'],
-            $_POST['d_expiration'],
-            $_POST['cryptogramme'],
-            $_POST['id_user']
-        );
-        $qq->ajouterpayement($payment);
-        header('Location:afficherpayement.php');
-    } else {
-        $error = "Missing information";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);//verfier les errurs
+include_once '../controllor/payementc.php';
+include_once '../controllor/Utilisateurc.php';
+$ut = new UtilisateurC();
+$qqq = $ut->afficherUtilisateurs();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (
+        isset($_POST["nom_carte"]) &&
+        isset($_POST["n_carte"]) &&
+        isset($_POST["d_expiration"]) &&
+        isset($_POST["cryptogramme"]) &&
+        isset($_POST["id_user"])
+    ) {
+            $payment = new Payment(
+                null, 
+                $_POST["nom_carte"],
+                $_POST["n_carte"],
+                $_POST["d_expiration"],
+                $_POST["cryptogramme"],
+                $_POST["id_user"]
+            );
+            $paymentC = new PayementC;
+            $paymentC->ajouterpayement($payment);
+            header('Location:afficherpayement.php');
+            exit; 
+            $error = "Missing information";
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,43 +46,32 @@ if (
         <link href="logo.png" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <script>
-          function validateForm() {
-              var nomCarte = document.getElementById('nom_carte').value;
-              var numCarte = document.getElementById('n_carte').value;
-              var dateExpiration = document.getElementById('d_expiration').value;
-              var cryptogramme = document.getElementById('Cryptogramme').value;
-      
-              if (nomCarte.trim() === '') {
-                  alert('Veuillez saisir le nom sur la carte.');
-                  return false;
-              }
-      
-              if (numCarte.length !== 16 || isNaN(numCarte)) {
-                  alert('Veuillez saisir un numéro de carte valide.cest une chaine de 16 nombre');
-                  return false;
-              }
-      
-              var currentDate = new Date();
-              var currentYear = currentDate.getFullYear();
-              var currentMonth = currentDate.getMonth() + 1;
-      
-              var inputYear = parseInt(dateExpiration.substring(2));
-              var inputMonth = parseInt(dateExpiration.substring(0, 2));
-      
-             // if (dateExpiration.length !== 4 || isNaN(dateExpiration) || inputMonth > 12 || inputMonth < currentMonth || (inputYear < currentYear % 100 || (inputYear === currentYear % 100 && inputMonth < currentMonth))) {
-              //    alert('Veuillez saisir une date d\'expiration valide mm/aa.');
-               //   return false;
-              //}
-      
-              if (cryptogramme.trim() === ''|| cryptogramme.length !== 3) {
-                  alert('Veuillez saisir un cryptogramme visuel valide.une chaine de taille 3.');
-                  return false;
-              }
-      
-              return true;
-          }
-      </script>
+        <script src="paiement.js"></script>
+        <!-- Inclure les fichiers CSS et JS de SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+       <!-- Ajoutez ce code dans votre fichier HTML -->
+              <script>
+                // Fonction pour afficher une notification de succès
+                function afficherNotificationSucces(message) {
+                  Swal.fire({
+                    icon: 'success',
+                    
+                    title: 'Succès',
+                    text: message,
+                  });
+                }
+
+                // Fonction pour afficher une notification d'erreur
+                function afficherNotificationErreur(message) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: message,
+                  });
+                }
+              </script>
+
       
     </head>
     <body class="d-flex flex-column">
@@ -101,6 +86,7 @@ if (
                       <li class="nav-item"><a class="nav-link" href="cours.php">Cours</a></li>
                           <li class="nav-item"><a class="nav-link" href="Panier.php"> Panier</a></li>
                           <li class="nav-item"><a class="nav-link" href="paiement.php">Paiement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ajoutertransaction.php">Transaction </a></li>
                         <li class="nav-item"><a class="nav-link" href="afficherpayement.php">afficher Liste Payments </a></li>
                           <li class="nav-item dropdown">
                       </ul>
@@ -122,13 +108,13 @@ if (
                           <tr>
                           <div class="form-floating mb-3">
                             <td><label for="nom_carte">Nom sur la carte</label></td>
-                          <td><input type="text" class="form-control" id="nom_carte" placeholder="nom_carte"></td>
+                          <td><input type="text" class="form-control" id="c" placeholder="nom_carte" name="nom_carte"></td>
                             
                           </div></tr>
             
                         <tr><div class="form-floating mb-3">
                            <td><label for="n_carte">N° carte</label></td>
-                          <td><input type="password" class="form-control" id="n_carte" placeholder="**** **** **** ****">
+                          <td><input type="password" class="form-control" id="n_carte" placeholder="**** **** **** ****" name="n_carte">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAUFJREFUSEvt1dFNxEAMBFBfJ1AJUAlQCVAJXCVAJdAJ6Ek7yHe6C19J7iMrRdns2h7P2LvZ1UpjtxJubcCLKb9JvUk9mwIX0Vy3VeW5GTQ/q+p5zK0/VZW176q6H3P7V1X10Pz2VfV25Ofzrst3ijGQ9wFwPYy/BgBnoIAehw1bQ0J57Bk/DYzvR75PAWMAyLAP5HU4cU4SkrJHCQEPGDU/yYj5LzBALDA/ZkjCsJBUTxIAe2+jqyTeSyvd2Z+E2mHC2DvsAyR4ymCNIhK1TuasSVQMSRyocq6rOxOgAggY2fPd+yUM2emDJMJGvJ7s5G8xgThix7ErgQGmqWGCA05zppkkcVDnqXMsKON+rHJsHBmAysDGYEeJ2JA4wNao8HfULuIC6fWafb4xnl3iqStzEfCtxovInIt/MbAOtFqNfwG4uU4fCWy6bQAAAABJRU5ErkJggg=="/>
                           </td>
                           </div></tr>
@@ -137,13 +123,13 @@ if (
             
                         <tr><div class="form-floating mb-3">
                             <td><label for="d_expiration">Date d'expiration</label></td>
-                            <td><input type="password" class="form-control" id="d_expiration" placeholder="MM/AA"></td>
+                            <td><input type="password" class="form-control" id="d_expiration" placeholder="MM/AA" name="d_expiration"></td>
                             
                           </div></tr>
             
                         <tr> <div class="form-floating mb-3">
                           <td><label for="Cryptogramme">Cryptogramme visuel</label></td>
-                            <td><input type="password" class="form-control" id="Cryptogramme" placeholder="Confirm Password"></td>
+                            <td><input type="password" class="form-control" id="Cryptogramme" placeholder="Confirm Password" name="cryptogramme"></td>
                           </div></tr>
                           <tr>
                                 <td>ID user:</td>

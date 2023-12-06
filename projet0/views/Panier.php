@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'C:\xampp\htdocs\projet0\con_dbb.php';
+include_once 'C:\xampp\htdocs\projet0\con_dbb.php';
 $total = 0; // Initialisez la variable $total
 if (isset($_SESSION['panier']) && is_array($_SESSION['panier'])) {
     if (isset($_GET['del'])) {

@@ -1,8 +1,8 @@
 <?php
-require_once '..\config.php';
-require_once '..\model\payement.php';
+include_once '../config.php';
+include_once '../model/payement.php';
 
-class payementC
+class PayementC
 {
     function afficherpayements()
     {
@@ -31,23 +31,29 @@ class payementC
 
     function ajouterpayement($payement)
     {
-        $sql = "INSERT INTO payement (id, nom_carte, n_carte, d_expiration, cryptogramme, id_user) 
-            VALUES (:id, :nom_carte, :n_carte, :d_expiration, :cryptogramme, :id_user)";
+        $sql = "INSERT INTO payement (nom_carte, n_carte, d_expiration, cryptogramme, id_user)
+        VALUES (:nom_carte, :n_carte, :d_expiration, :cryptogramme, :id_user)";
         $db = config::getConnexion();
         try {
+            // var_dump($payement);
             $query = $db->prepare($sql);
             $query->execute([
-                'id' => $payement->getId(),
                 'nom_carte' => $payement->getNomCarte(),
                 'n_carte' => $payement->getNCarte(),
                 'd_expiration' => $payement->getDExpiration(),
                 'cryptogramme' => $payement->getCryptogramme(),
-                'id_user' => $payement->getIdUser()
+                'id_user' => $payement->getIdUser(),
             ]);
         } catch (Exception $e) {
-            echo 'Erreur: ' . $e->getMessage();
+            echo 'Erreur PHP: ' . $e->getMessage();
+            echo '<br>';
+            echo 'Erreur SQL: ' . implode(', ', $query->errorInfo());
         }
     }
+    
+    
+    
+    
 
     function recupererpayement($id)
     {
@@ -55,7 +61,7 @@ class payementC
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
-            $query->bindValue(':id', $id);
+            ///$query->bindValue(':id', $id);
             $query->execute();
 
             $payement = $query->fetch();

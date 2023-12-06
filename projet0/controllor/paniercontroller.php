@@ -1,6 +1,6 @@
 <?php
-require_once 'C:\xampp\htdocs\projet0\model\panierModel.php';
-require 'C:\xampp\htdocs\projet0\config';
+include_once '..\model\panierModel.php';
+include_once '..\config';
 
 class CoursController
 {
