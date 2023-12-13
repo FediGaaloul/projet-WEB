@@ -1,0 +1,141 @@
+.creation {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: aliceblue;
+}
+
+.creation button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.creation-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.nav ul li {
+  float: left;
+}
+
+.nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav ul li a:hover {
+  background-color: #111;
+}
+.liste-forum {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+.message {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: aliceblue;
+}
+
+.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .nav ul {
+  background-color: #111;
+}
+
+.dark-mode .liste-forum {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #555;
+}
+#darkModeToggleContainer {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center; 
+  padding: 10px; /
+}
+#darkModeToggle {
+  width: 40px; /* Ajustez la taille du bouton selon vos préférences */
+  height: 40px;
+  border-radius: 50%; /* Rend le bouton circulaire */
+  background-color: #051526; /* Ajoutez la couleur de fond souhaitée */
+  color: #fff; /* Ajoutez la couleur du texte */
+  border: none; /* Supprimez les bordures */
+  cursor: pointer; /* Changez le curseur pour indiquer que c'est cliquable */
+  outline: none; /* Supprimez la bordure de focus par défaut */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+
+.dark-mode .message {
+  background-color: #222; 
+  color: #fff; /* Couleur du texte en mode sombre */
+  border-color: #555; /* Couleur de la bordure en mode sombre */
+}
+.dark-mode .creation {
+  background-color: #222;
+  color: #fff;
+}
+
+.dark-mode .creation button {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .nav ul {
+  background-color: #111;
+}
+
+.dark-mode .nav ul li a {
+  color: #fff;
+}
+
+.dark-mode .liste-forum {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+.dark-mode .btn {
+  background-color: #004080;
+  color: #fff;
+}
